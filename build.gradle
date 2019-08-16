@@ -1,0 +1,35 @@
+plugins {
+  id 'org.springframework.boot' version '2.1.7.RELEASE'
+  id 'io.spring.dependency-management' version '1.0.7.RELEASE'
+  id 'java'
+}
+
+group = 'be.ordina'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation 'org.springframework.boot:spring-boot-starter-web'
+  implementation 'org.springframework.boot:spring-boot-starter-actuator'
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+buildDir = "build/gradle"
+apply plugin: 'java'
+apply plugin: 'eclipse'
+eclipse {
+  classpath {
+    defaultOutputDir = file('build/eclipse')
+    file.whenMerged {
+      entries.each { entry ->
+        if (entry.kind == 'src' && entry.hasProperty('output')) {
+          entry.output = entry.output.replace('bin/', "build/eclipse/")
+        }
+      }
+    }
+  }
+}
